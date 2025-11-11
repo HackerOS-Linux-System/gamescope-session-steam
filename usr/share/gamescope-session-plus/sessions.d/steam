@@ -1,12 +1,12 @@
 #! /bin/bash
 
 function short_session_recover {
-    mkdir -p ~/.local/share/Steam
+    mkdir -p ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
     # remove some caches and stateful things known to cause Steam to fail to start if corrupt
-    rm -rf --one-file-system ~/.local/share/Steam/config/widevine
+    rm -rf --one-file-system ~/.var/app/com.valvesoftware.Steam/.local/share/Steam/config/widevine
     # extract the steam bootstrap to potentially fix the issue the next boot
     if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]]; then
-        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
+        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
     fi
     # change session to desktop as fallback
     steamos-session-select desktop
@@ -29,7 +29,7 @@ export STEAM_USE_MANGOAPP=1
 export STEAM_USE_DYNAMIC_VRS=1
 
 # Set up first time bootstrap status
-export STEAM_BOOTSTRAP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/gamescope/bootstrap.cfg"
+export STEAM_BOOTSTRAP_CONFIG="${XDG_CONFIG_HOME:-$HOME/.var/app/com.valvesoftware.Steam/.config}/gamescope/bootstrap.cfg"
 
 # Make path to Steam bootstrap config file.
 mkdir -p "$(dirname "$STEAM_BOOTSTRAP_CONFIG")"
@@ -97,14 +97,15 @@ fi
 
 export CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 
-export CLIENTCMD="steam -gamepadui -steamos3 -steampal -steamdeck"
+export CLIENTCMD="flatpak run com.valvesoftware.Steam -gamepadui -steamos3 -steampal -steamdeck"
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
-touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
+touch "${HOME}/.var/app/com.valvesoftware.Steam/.steam/root/config/SteamAppData.vdf" || true
 
 if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]] && ! grep -q "set_bootstrap=1" "$STEAM_BOOTSTRAP_CONFIG"; then
-    mkdir -p ~/.local/share/Steam
-    tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.local/share/Steam
+    mkdir -p ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
+    tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
+
     echo "set_bootstrap=1" >> "$STEAM_BOOTSTRAP_CONFIG"
 fi
 
