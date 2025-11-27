@@ -3,10 +3,10 @@
 function short_session_recover {
     mkdir -p ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
     # remove some caches and stateful things known to cause Steam to fail to start if corrupt
-    rm -rf --one-file-system ~/.var/app/com.valvesoftware.Steam/.local/share/Steam/config/widevine
+    rm -rf --one-file-system ~/.var/app/com.valvesoftware.Steam/.config/config/widevine
     # extract the steam bootstrap to potentially fix the issue the next boot
     if [[ -f "/etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz" ]]; then
-        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.var/app/com.valvesoftware.Steam/.local/share/Steam
+        tar xf /etc/first-boot/bootstraplinux_ubuntu12_32.tar.xz -C ~/.var/app/com.valvesoftware.Steam/.config
     fi
     # change session to desktop as fallback
     steamos-session-select desktop
