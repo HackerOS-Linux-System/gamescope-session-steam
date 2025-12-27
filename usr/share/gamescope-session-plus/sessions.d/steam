@@ -97,7 +97,7 @@ fi
 
 export CURSOR_FILE="${HOME}/.local/share/Steam/tenfoot/resource/images/cursors/arrow.png"
 
-export CLIENTCMD="HackerOS-Steam run -gamepadui -steamos3 -steampal -steamdeck"
+export CLIENTCMD="distrobox enter HackerOS-Steam -- steam -gamepadui -steamos3 -steampal -steamdeck"
 
 # Workaround for Steam login issue while Steam client change propagates out of Beta
 touch "${HOME}"/.steam/root/config/SteamAppData.vdf || true
