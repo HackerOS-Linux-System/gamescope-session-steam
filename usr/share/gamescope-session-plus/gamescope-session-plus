@@ -28,7 +28,7 @@ get_gamescope_binary() {
 	if [ -n "$GAMESCOPE_BIN" ]; then
 		echo $GAMESCOPE_BIN
 	else
-		echo "/usr/bin/gamescope"
+		echo "distrobox enter HackerOS-Stem -- gamescope"
 	fi
 }
 
